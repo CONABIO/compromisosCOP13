@@ -27,13 +27,13 @@ class CompromisosController < ApplicationController
   # POST /compromisos.json
   def create
     @compromiso = Compromiso.new(compromiso_params)
-
-    respond_to do |format|
+    if Compromiso.find_by_email(compromiso_params[:email]).present?
+      render json: {:a => "No te has podido comprometer, el email ya existe, puedes usar otro si lo deseas"}.to_json
+    else
       if @compromiso.save
-        #format.html { redirect_to @compromiso, notice: 'Compromiso was successfully created.' }
-        format.json { render json: {:a => "¡Te has comprometido!"}.to_json}
+        render json: {:a => "¡Te has comprometido!"}.to_json
       else
-        format.json { render json: {:a => "No te has podido comrpometer, hubo un error en nuestro sistema, intenta más tarde"}.to_json}
+        render json: {:a => "No te has podido comprometer, hubo un error en nuestro sistema, intenta más tarde"}.to_json
       end
     end
   end
