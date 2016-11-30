@@ -1,6 +1,7 @@
 class CompromisosController < ApplicationController
   before_action :set_compromiso, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  before_action :set_access
 
   # GET /compromisos
   # GET /compromisos.json
@@ -29,11 +30,10 @@ class CompromisosController < ApplicationController
 
     respond_to do |format|
       if @compromiso.save
-        format.html { redirect_to @compromiso, notice: 'Compromiso was successfully created.' }
-        format.json { render :show, status: :created, location: @compromiso }
+        #format.html { redirect_to @compromiso, notice: 'Compromiso was successfully created.' }
+        format.json { render json: {:a => "¡Te has comprometido!"}.to_json}
       else
-        format.html { render :new }
-        format.json { render json: @compromiso.errors, status: :unprocessable_entity }
+        format.json { render json: {:a => "No te has podido comrpometer, hubo un error en nuestro sistema, intenta más tarde"}.to_json}
       end
     end
   end
@@ -71,5 +71,8 @@ class CompromisosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def compromiso_params
       params.require(:compromiso).permit(:nombre, :apellido, :email, :ciudad_origen, :edad, :compromiso)
-    end
+      end
+  def set_access
+    response.headers["Access-Control-Allow-Origin"] = "*"
+  end
 end
