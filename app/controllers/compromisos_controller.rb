@@ -2,12 +2,13 @@ class CompromisosController < ApplicationController
   before_action :set_compromiso, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
   before_action :set_access, only: [:create]
-  before_action :authenticate, except: [:create]
+  before_action :authenticate, except: [:create, :dame_datos_grafica]
 
   # GET /compromisos
   # GET /compromisos.json
   def index
     @compromisos = Compromiso.all
+    @conteo = cuenta_compromisos
   end
 
   # GET /compromisos/1
@@ -64,10 +65,7 @@ class CompromisosController < ApplicationController
   end
 
   def dame_datos_grafica
-    compromisos = Compromiso.all.map(&:compromiso)
-    conteo = (0..4).map{|k| compromisos.count{|x| (x.to_i&(2**k))>0} }
-
-    render json:conteo.to_json
+    render json:cuenta_compromisos.to_json
   end
 
   private
@@ -86,4 +84,8 @@ class CompromisosController < ApplicationController
     response.headers["Access-Control-Allow-Origin"] = "*" if request.headers["HTTP_ORIGIN"].include?("ggonzalez")
   end
 
+  def cuenta_compromisos
+    compromisos = Compromiso.all.map(&:compromiso)
+    (0..4).map{|k| compromisos.count{|x| (x.to_i&(2**k))>0} }
+  end
 end

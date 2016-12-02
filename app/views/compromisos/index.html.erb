@@ -22,9 +22,10 @@
         <td><%= compromiso.ciudad_origen %></td>
         <td><%= compromiso.edad %></td>
         <td><%= compromiso.compromiso %></td>
-        <td><%= link_to 'Mostrar', compromiso %> |
-          <%= link_to 'Editar', edit_compromiso_path(compromiso) %> |
-          <%= link_to 'Destruir!!!', compromiso, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <td>
+          <%= link_to 'Mostrar', compromiso, :class => 'btn btn-success btn-sm'%> |
+          <%= link_to 'Editar', edit_compromiso_path(compromiso), :class => 'btn btn-warning btn-sm'%> |
+          <%= link_to 'Destruir!!!', compromiso, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-sm' %>
         </td>
       </tr>
     <% end %>
@@ -33,4 +34,4 @@
 
 <br>
 
-<%= link_to 'Nuevo Compromiso', new_compromiso_path, :class => 'btn btn-info btn-xs'  %>
+<%= link_to 'Nuevo Compromiso', new_compromiso_path, :class => 'btn btn-default btn-lg '  %>
