@@ -6,12 +6,11 @@
   <thead>
     <tr>
       <th>Nombre</th>
-      <th>Apellido</th>
       <th>Email</th>
       <th>Ciudad origen</th>
       <th>Edad</th>
       <th>Compromiso</th>
-      <th colspan="3"></th>
+      <th>Admin</th>
     </tr>
   </thead>
 
@@ -19,14 +18,14 @@
     <% @compromisos.each do |compromiso| %>
       <tr>
         <td><%= compromiso.nombre %></td>
-        <td><%= compromiso.apellido %></td>
         <td><%= compromiso.email %></td>
         <td><%= compromiso.ciudad_origen %></td>
         <td><%= compromiso.edad %></td>
         <td><%= compromiso.compromiso %></td>
-        <td><%# link_to 'Show', compromiso %></td>
-        <td><%# link_to 'Edit', edit_compromiso_path(compromiso) %></td>
-        <td><%# link_to 'Destroy', compromiso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Mostrar', compromiso %> |
+          <%= link_to 'Editar', edit_compromiso_path(compromiso) %> |
+          <%= link_to 'Destruir!!!', compromiso, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +33,4 @@
 
 <br>
 
-<%# link_to 'Nuevo Compromiso', new_compromiso_path, :class => 'btn btn-info btn-xs'  %>
+<%= link_to 'Nuevo Compromiso', new_compromiso_path, :class => 'btn btn-info btn-xs'  %>

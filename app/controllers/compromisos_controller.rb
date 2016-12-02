@@ -28,7 +28,7 @@ class CompromisosController < ApplicationController
   # POST /compromisos.json
   def create
     @compromiso = Compromiso.new(compromiso_params)
-    if Compromiso.find_by_email(compromiso_params[:email]).present?
+    if Compromiso.find_by_email(compromiso_params[:email]).present?#este chequeo se debe hacer en el modelo ¬¬
       render json: {:a => "No te has podido comprometer, el email ya existe, puedes usar otro si lo deseas"}.to_json
     else
       if @compromiso.save
