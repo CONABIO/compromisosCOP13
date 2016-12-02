@@ -1,7 +1,8 @@
 class CompromisosController < ApplicationController
   before_action :set_compromiso, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
-  before_action :set_access
+  before_action :set_access, only: [:create]
+  before_action :authenticate, except: [:create]
 
   # GET /compromisos
   # GET /compromisos.json
@@ -62,17 +63,23 @@ class CompromisosController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_compromiso
-      @compromiso = Compromiso.find(params[:id])
-    end
+  def conteo
+    
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def compromiso_params
-      params.require(:compromiso).permit(:nombre, :apellido, :email, :ciudad_origen, :edad, :compromiso)
-      end
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_compromiso
+    @compromiso = Compromiso.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def compromiso_params
+    params.require(:compromiso).permit(:nombre, :apellido, :email, :ciudad_origen, :edad, :compromiso)
+  end
+
   def set_access
-    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Origin"] = request.headers["HTTP_ORIGIN"] if request.headers["HTTP_ORIGIN"].include?("biodiversidad.gob.mx")
+    response.headers["Access-Control-Allow-Origin"] = "*" if request.headers["HTTP_ORIGIN"].include?("ggonzalez")
   end
 end
