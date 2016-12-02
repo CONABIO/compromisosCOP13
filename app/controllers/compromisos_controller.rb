@@ -1,7 +1,7 @@
 class CompromisosController < ApplicationController
   before_action :set_compromiso, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
-  before_action :set_access, only: [:create]
+  before_action :set_access, only: [:create, :dame_datos_grafica]
   before_action :authenticate, except: [:create, :dame_datos_grafica]
 
   # GET /compromisos
@@ -33,7 +33,7 @@ class CompromisosController < ApplicationController
       render json: {:a => "No te has podido comprometer, el email ya existe, puedes usar otro si lo deseas"}.to_json
     else
       if @compromiso.save
-        render json: {:a => "¡Te has comprometido!"}.to_json
+        render json: {:a => "¡Te has comprometido!", :conteo => cuenta_compromisos}.to_json
       else
         render json: {:a => "No te has podido comprometer, hubo un error en nuestro sistema, intenta más tarde"}.to_json
       end
