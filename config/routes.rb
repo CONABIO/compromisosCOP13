@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :compromisos
+  get 'dame_conteo_compromisos' => 'compromisos#dame_datos_grafica'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

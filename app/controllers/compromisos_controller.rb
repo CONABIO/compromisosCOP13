@@ -63,8 +63,11 @@ class CompromisosController < ApplicationController
     end
   end
 
-  def conteo
-    
+  def dame_datos_grafica
+    compromisos = Compromiso.all.map(&:compromiso)
+    conteo = (0..4).map{|k| compromisos.count{|x| (x.to_i&(2**k))>0} }
+
+    render json:conteo.to_json
   end
 
   private
@@ -82,4 +85,5 @@ class CompromisosController < ApplicationController
     response.headers["Access-Control-Allow-Origin"] = request.headers["HTTP_ORIGIN"] if request.headers["HTTP_ORIGIN"].include?("biodiversidad.gob.mx")
     response.headers["Access-Control-Allow-Origin"] = "*" if request.headers["HTTP_ORIGIN"].include?("ggonzalez")
   end
+
 end
